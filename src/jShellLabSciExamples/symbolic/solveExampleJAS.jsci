@@ -1,0 +1,16 @@
+
+
+import org.matheclipse.core.eval.ExprEvaluator;
+import org.matheclipse.core.interfaces.IExpr;
+import org.matheclipse.parser.client.SyntaxError;
+import org.matheclipse.parser.client.math.MathException;
+
+
+			ExprEvaluator util = new ExprEvaluator();
+			IExpr result = util.eval("Solve(2*x==5 + 4*x,x)");
+			// print: {{x->-5/2}}
+			System.out.println(result.toString());
+
+			result = util.eval("Roots(2*x==5+4*x, x)");
+			// print: x==-5/2
+			System.out.println(result.toString());
