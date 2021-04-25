@@ -185,6 +185,7 @@ GlobalValues.myGEdit = new jshellLabEditor("Untitled", true);
            
     // GlobalAutoCompletion.initAutoCompletion();
                
+         ClassLoader thisLoader = this.getClass().getClassLoader();
          
         if (GlobalValues.jshell == null) {
             
@@ -208,6 +209,7 @@ GlobalValues.myGEdit = new jshellLabEditor("Untitled", true);
                   if (currentFileName.endsWith(".jar")) {
                
                    GlobalValues.jshell.addToClasspath(currentFileName);
+                   
                    System.out.println("appending to JShell classpath from extraJarsForJShellClasspath folder toolbox: "+currentFileName);
               }  // endsWith("jar")
             }   // for all files of then extraJarsForJShellClasspath folder

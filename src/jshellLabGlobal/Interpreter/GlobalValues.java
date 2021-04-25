@@ -251,9 +251,9 @@ public   class GlobalValues
                      "import static jShellLabSci.FFT.FFTCommon.*;  ", 
                      "import static java.util.List.*;",
                      "import java.util.Set;",
-                     "import static java.util.Set.*;",
+                     "import static java.util.Set.*;"
                 // EJML imports
-                     "import org.ejml.*;",
+               /*      "import org.ejml.*;",
                      "import org.ejml.concurrency.*;",
                      "import pabeles.concurrency.*;",
                      "import org.ejml.data.*;",
@@ -261,11 +261,11 @@ public   class GlobalValues
                      "import org.ejml.dense.block.decomposition.bidiagonal.*;",
                      "import org.ejml.dense.block.decomposition.chol.*;",
                      "import org.ejml.dense.block.decomposition.hessenberg.*;",
-                     "import org.ejml.dense.decomposition.qr.*;",
+                     "import org.ejml.dense.block.decomposition.qr.*;",
                      "import org.ejml.dense.block.linsol.chol.*;",
                      "import org.ejml.dense.block.linsol.qr.*;",
                      "import org.ejml.dense.blockd3.*;",
-                     "import org.ejml.dense.densed.mult.*;",
+                     "import org.ejml.dense.densed2.mult.*;",
                      "import org.ejml.dense.fixed.*;",
                      "import org.ejml.dense.row.*;",
                      "import org.ejml.dense.row.decompose.*;",
@@ -312,7 +312,7 @@ public   class GlobalValues
                      "import org.ejml.sparse.csc.mult.*;",
                      "import org.ejml.sparse.triplet.*;",
                     "import static org.ejml.ops.MatrixIO.*;"
-  
+  */
 };
         
            // Console Configuration
@@ -468,6 +468,24 @@ public   class GlobalValues
          //System.out.println(mgr);
          
          kotlinEngine = new ScriptEngineManager().getEngineByName("kotlin");
+        try {
+         for (String str: GlobalValues.jshellBasicGlobalImports) {
+             str = str.trim().replace("static", " ");
+             if (str.contains("import") ) {
+                 System.out.println("evaluating: "+str);
+             
+               kotlinEngine.eval(str);
+         }
+         }
+                 
+        }
+        catch (ScriptException e)  {
+            e.printStackTrace();
+        }
+                 
+                 
+                 
+                 
         // kotlinEngine.eval("var ff=8; ff");
       //   System.out.println(kotlinEngine);
          /* java.util.List<ScriptEngineFactory> factories = mgr.getEngineFactories();
