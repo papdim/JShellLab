@@ -1,0 +1,112 @@
+apply plugin: 'java'
+sourceCompatibility = 11	
+targetCompatibility = 11
+
+
+
+buildscript {
+    ext {
+        dl4j_version = "1.0.0-beta6"
+   //     spark_version = "1.0.0-beta4_spark_2"
+       
+         
+    }
+    repositories {
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        mavenCentral()
+    }
+    
+}
+apply plugin: "application"
+
+repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.deeplearning4j:deeplearning4j-core:${dl4j_version}"
+    compile "org.nd4j:nd4j-native-platform:${dl4j_version}"
+    //compile "org.deeplearning4j:dl4j-spark_2.11:${spark_version}"
+     compile fileTree(dir: "lib", include: "*.jar")
+   
+    compile fileTree(dir: "build/classes/java/main", include: "*.class")
+    compile fileTree(dir: "src/", include: "*.class")
+  
+}
+
+
+sourceSets {
+    main {
+       
+        java {
+             
+           Set<File> classpathFiles =  fileTree (dir : "lib", include: "*.jar").getFiles()+ new File("jShellLab/src/")
+   compileClasspath =  files(classpathFiles)
+            
+            srcDir "src/"
+    }
+   }
+}
+
+jar {
+    baseName="jShellLab"
+    includeEmptyDirs = false
+    mainClassName="jshellLabExec.jshellLab.jshellLab"
+    
+     
+           
+
+           //def extraJarsForJShellClasspathFiles = fileTree (dir : "extraJarsForJShellClasspath", include: "*.jar").getFiles().name
+           def libpathfiles = fileTree (dir : "lib", include: "*.jar").getFiles().name
+           def appendedLib = libpathfiles.collect { item -> "lib/"+item}.join(' ')
+           
+        
+         
+           
+    manifest {
+        attributes('Class-Path': appendedLib,
+'Main-Class':'jshellLabExec.jshellLab.jshellLab')
+    }
+
+  
+def extensions = [ 'class', 'jsci', 'gif', 'm', 'htm', 'html', 'jpg', 'plots-jsci',  'png', 'properties',  'txt', 'javaSGT', 'wav-jsci'] 
+ 
+   from(sourceSets.main.java.srcDirs) {
+      extensions.each({extension -> include "**/*.${extension}"})
+   }
+
+
+    
+ }
+
+
+task fatJar(type: Jar) {
+
+    baseName="jShellLab"
+    includeEmptyDirs = false
+    mainClassName="jshellLabExec.jshellLab.jshellLab"
+    zip64=true
+
+    manifest {
+      attributes(
+'Main-Class':'jshellLabExec.jshellLab.jshellLab')
+    }
+  
+  
+   
+  classifier = 'all'
+    
+  
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } 
+    }
+ {
+      //  exclude "META-INF/*.SF"
+       exclude "META-INF/*.DSA"
+     //   exclude "META-INF/*.RSA"
+    }
+
+   
+    with jar
+   
+}

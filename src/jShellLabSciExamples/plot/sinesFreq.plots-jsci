@@ -1,0 +1,5 @@
+
+var t = inc(0, 0.01, 100);
+var x = sin(t.multiply(3.4)).plus( cos(t.multiply(9.8)));
+plot(t,x);
+

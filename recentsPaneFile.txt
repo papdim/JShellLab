@@ -1,0 +1,2 @@
+/home/sterg/NBProjects/JShellLab/test1.txt
+/home/sterg/NBProjects/JShellLab/test2.txt

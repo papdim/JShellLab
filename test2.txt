@@ -1,0 +1,8 @@
+
+
+var N=6000;
+
+var xx= vrand(N);
+
+
+plot(xx)
