@@ -1,2 +1,0 @@
-var t=inc(0, 0.01, 10); var x = sin(2.3*t)
-plot(t, x,  "r", 5)
